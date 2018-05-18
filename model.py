@@ -24,7 +24,7 @@ class Question(db.Model):
     __tablename__ = "questions"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    question = db.Column(db.Text, nullable=False)
+    body = db.Column(db.Text, nullable=False)
     response_type_id = db.Column(db.String(3), nullable=False)
 
     answers = db.relationship("Answer", backref="questions")

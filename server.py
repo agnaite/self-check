@@ -25,7 +25,7 @@ def index_page():
 
     return render_template("index.html")
 
-@app.route("/new-self-check"):
+@app.route("/new-self-check")
 def add_new_self_check():
     """Add new self check."""
 
