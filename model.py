@@ -11,7 +11,7 @@ class SelfCheck(db.Model):
 
     __tablename__ = "self_checks"
 
-    self_check_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64), nullable=False, unique=True)
     created_at = db.Column(db.DateTime())
     archived = db.Column(db.Boolean, default=False)
@@ -23,7 +23,7 @@ class Question(db.Model):
 
     __tablename__ = "questions"
 
-    question_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     question = db.Column(db.Text, nullable=False)
     response_type_id = db.Column(db.String(3), nullable=False)
 
@@ -35,9 +35,9 @@ class SelfCheckQuestion(db.Model):
 
     __tablename__ = "self_check_questions"
 
-    self_check_question_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    self_check_id = db.Column(db.Integer, db.ForeignKey("self_checks.self_check_id"))
-    question_id = db.Column(db.Integer, db.ForeignKey("questions.question_id"))
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    self_check_id = db.Column(db.Integer, db.ForeignKey("self_checks.id"))
+    question_id = db.Column(db.Integer, db.ForeignKey("questions.id"))
 
 
 class Answer(db.Model):
@@ -45,8 +45,8 @@ class Answer(db.Model):
 
     __tablename__ = "answers"
 
-    answer_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    question_id = db.Column(db.Integer, db.ForeignKey("questions.question_id"))
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    question_id = db.Column(db.Integer, db.ForeignKey("questions.id"))
     answer = db.Column(db.String(240), nullable=False)
     timestamp = db.Column(db.DateTime())
 
