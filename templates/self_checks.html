@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <title>self check</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href='/static/style.css'>
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+
+</head>
+<body>
+  <h1>Self Checks</h1>
+  
+  <h3>active:</h3>
+  <ul>
+  {% for item in self_checks %}
+    {% if item.active %}
+      <li>{{item.name}}</li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+
+  <h3>archived:</h3>
+  <ul>
+  {% for item in self_checks %}
+    {% if not item.active %}
+      <li>{{item.name}}</li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+</body>
+</html>

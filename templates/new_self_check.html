@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+  <title>self check</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href='/static/style.css'>
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+
+</head>
+<body>
+  <h1>Add Self Check</h1>
+
+  <form action="/submit-self-check" method="POST">
+    <label>Enter self-check name
+      <input type="text" name="name">
+    </label>
+    <input type="submit" value="Add">
+  </form>
+</body>
+</html>
