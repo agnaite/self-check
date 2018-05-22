@@ -11,22 +11,13 @@
 <body>
   <h1>Self Checks</h1>
   
-  <h3>active:</h3>
-  <ul>
-  {% for item in self_checks %}
-    {% if item.active %}
-    <a href="/self-check/{{item.id}}">{{item.name}}</a>
-    {% endif %}
-  {% endfor %}
-  </ul>
+  <h3>{{self_check.name}}</h3>
+  <a href="/archive-self-check/{{self_check.id}}">Archive</a>
 
-  <h3>archived:</h3>
   <ul>
-  {% for item in self_checks %}
-    {% if not item.active %}
-    <li>{{item.name}}</li>
-    {% endif %}
-  {% endfor %}
+    {% for question in questions %}
+      <li>{{question.body}}
+    {% endfor %}
   </ul>
 </body>
 </html>

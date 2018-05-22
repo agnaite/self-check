@@ -31,17 +31,25 @@ def index_page():
 def show_all_self_checks():
     """Show all active self-checks."""
     
-    self_checks = QuestionDefinitionSet.query.filter_by(active=True).all()
+    self_checks = QuestionDefinitionSet.query.all()
     
     return render_template("self_checks.html",
                            self_checks=self_checks)
 
+@app.route("/self-check/<self_check_id>")
+def show_self_check(self_check_id):
+    """Show single self-check"""
+
+    self_check = QuestionDefinitionSet.query.get(int(self_check_id))
+    questions = self_check.question_definitions 
+
+    return render_template("self_check.html",
+                           self_check=self_check,
+                           questions=questions)
+
 @app.route("/new-self-check")
 def add_new_self_check():
     """Add new self check."""
-
-    #TODO: grab form data
-    # add instance to self check table
 
     return render_template("/new_self_check.html")
 
@@ -55,7 +63,39 @@ def submit_new_self_check():
     db.session.add(self_check)
     db.session.commit()
 
+    return redirect("/add-question/"+str(self_check.id))
+
+@app.route("/archive-self-check/<self_check_id>")
+def archive_self_check(self_check_id):
+    """Archive a self-check."""
+
+    self_check = QuestionDefinitionSet.query.get(int(self_check_id))
+    self_check.active = False
+
+    db.session.commit()
+
     return redirect("/self-checks")
+
+@app.route("/add-question/<self_check_id>")
+def add_question(self_check_id):
+    """Add questiont to self-check."""
+
+    return render_template("add_question.html", 
+                           self_check_id=self_check_id)
+
+@app.route("/submit-question", methods=["POST"])
+def submit_new_question():
+    """Submit new self-check."""
+    
+    self_check_id = request.form.get("self_check_id")
+    question = request.form.get("question")
+
+    question_definition = QuestionDefinition(body=question, 
+                                             question_definition_set_id=int(self_check_id))
+    db.session.add(question_definition)
+    db.session.commit()
+
+    return redirect("/add-question/"+self_check_id)
 
 
 if __name__ == "__main__":
