@@ -107,6 +107,11 @@ def archive_self_check(self_check_id):
 
     self_check = QuestionDefinitionSet.query.get(int(self_check_id))
     self_check.active = False
+    
+    questions = self_check.question_definitions
+
+    for question in questions:
+        db.session.delete(question)
 
     db.session.commit()
 
