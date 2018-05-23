@@ -9,16 +9,15 @@
 
 </head>
 <body>
-  <h1>Self Checks</h1>
-  
-  <h3>{{self_check.name}}</h3>
-  <a href="/archive-self-check/{{self_check.id}}">Archive</a>
-  <a href="/take-self-check/{{self_check.id}}">Take self check</a>
+  <h1>{{ self_check.name }}</h1>
 
-  <ul>
+  <form action="/submit-self-check/{{self_check.id}}" method="POST">
     {% for question in questions %}
-      <li>{{question.body}}
+    <label>{{ question.body }}
+      <input type="text" name="{{question.id}}">
+    </label>
     {% endfor %}
-  </ul>
+    <input type="submit" value="Finish">
+  </form>
 </body>
 </html>

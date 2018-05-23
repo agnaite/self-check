@@ -47,6 +47,42 @@ def show_self_check(self_check_id):
                            self_check=self_check,
                            questions=questions)
 
+@app.route("/take-self-check/<self_check_id>")
+def take_self_check(self_check_id):
+    """Take a self-check."""
+
+    self_check = QuestionDefinitionSet.query.get(int(self_check_id))
+    questions = self_check.question_definitions
+
+    return render_template("take_self_check.html",
+                           self_check=self_check,
+                           questions=questions)
+
+@app.route("/submit-self-check/<self_check_id>", methods=["POST"])
+def submit_self_check(self_check_id):
+    """Submit a self-check"""
+
+    self_check = QuestionDefinitionSet.query.get(int(self_check_id))
+    questions = self_check.question_definitions
+    
+    self_check_session = SelfCheckSession(timestamp=datetime.now())
+    db.session.add(self_check_session)
+    db.session.commit()
+
+    for question in questions:
+        print(question.id, type(question.id))
+        response = request.form.get(str(question.id))
+        answer = Answer(response=response,
+                        self_check_session_id=self_check_session.id,
+                        question_definition_id=question.id)
+
+        db.session.add(answer)
+
+    db.session.commit()
+
+    return redirect("/self-checks")
+    
+
 @app.route("/new-self-check")
 def add_new_self_check():
     """Add new self check."""
