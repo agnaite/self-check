@@ -15,13 +15,17 @@
   <a href="/archive-self-check/{{self_check.id}}">Archive</a>
   <a href="/take-self-check/{{self_check.id}}">Take self check</a>
 
+  <h5>Questions:</h5>
   <ul>
     {% for question in questions %}
       <li>{{question.body}}
     {% endfor %}
-
+  </ul>
+  
+  <h5>Responses:</h5>
+  <ul>
     {% for session in sessions %}
-      <li>{{session.answers}}
+    <li>{{session.timestamp}}</li>
     {% endfor %}
   </ul>
 </body>
