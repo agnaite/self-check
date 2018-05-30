@@ -19,6 +19,10 @@
     {% for question in questions %}
       <li>{{question.body}}
     {% endfor %}
+
+    {% for session in sessions %}
+      <li>{{session.answers}}
+    {% endfor %}
   </ul>
 </body>
 </html>

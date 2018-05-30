@@ -12,8 +12,10 @@ class SelfCheckSession(db.Model):
     __tablename__ = "self_check_sessions"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    question_definition_set_id = db.Column(db.ForeignKey("question_definition_sets.id"))
     timestamp = db.Column(db.DateTime())
-
+    
+    question_definition_sets = db.relationship("QuestionDefinitionSet", backref="self_check_sessions")
     answers = db.relationship("Answer", backref="self_check_sessions")
 
 

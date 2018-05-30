@@ -42,10 +42,13 @@ def show_self_check(self_check_id):
 
     self_check = QuestionDefinitionSet.query.get(int(self_check_id))
     questions = self_check.question_definitions 
+    
+    sessions = self_check.self_check_sessions
 
     return render_template("self_check.html",
                            self_check=self_check,
-                           questions=questions)
+                           questions=questions,
+                           sessions=sessions)
 
 @app.route("/take-self-check/<self_check_id>")
 def take_self_check(self_check_id):
@@ -65,12 +68,12 @@ def submit_self_check(self_check_id):
     self_check = QuestionDefinitionSet.query.get(int(self_check_id))
     questions = self_check.question_definitions
     
-    self_check_session = SelfCheckSession(timestamp=datetime.now())
+    self_check_session = SelfCheckSession(timestamp=datetime.now(),
+                                          question_definition_set_id=int(self_check_id))
     db.session.add(self_check_session)
     db.session.commit()
 
     for question in questions:
-        print(question.id, type(question.id))
         response = request.form.get(str(question.id))
         answer = Answer(response=response,
                         self_check_session_id=self_check_session.id,
@@ -142,4 +145,4 @@ def submit_new_question():
 if __name__ == "__main__":
 
     connect_to_db(app)
-    app.run(host="0.0.0.0", port=5002, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
