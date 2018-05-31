@@ -50,6 +50,17 @@ def show_self_check(self_check_id):
                            questions=questions,
                            sessions=sessions)
 
+@app.route("/session/<self_check_session_id>")
+def get_session(self_check_session_id):
+    """Answers to a specific self check session."""
+
+    session = SelfCheckSession.query.get(int(self_check_session_id))
+    answers = session.answers
+
+    return render_template("session.html",
+                           answers=answers,
+                           session=session)
+
 @app.route("/take-self-check/<self_check_id>")
 def take_self_check(self_check_id):
     """Take a self-check."""
@@ -145,4 +156,4 @@ def submit_new_question():
 if __name__ == "__main__":
 
     connect_to_db(app)
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5001, debug=True)

@@ -18,14 +18,14 @@
   <h5>Questions:</h5>
   <ul>
     {% for question in questions %}
-      <li>{{question.body}}
+      <li>{{question.body}}</li>
     {% endfor %}
   </ul>
   
   <h5>Responses:</h5>
   <ul>
     {% for session in sessions %}
-    <li>{{session.timestamp}}</li>
+      <a href="/session/{{session.id}}">{{session.timestamp}}</a>
     {% endfor %}
   </ul>
 </body>
